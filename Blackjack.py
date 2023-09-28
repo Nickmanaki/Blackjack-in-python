@@ -1,4 +1,17 @@
 import random
+import time
+
+def dealerdef(deal):
+    for i in range(len(deal)):
+        if i == 0:
+           print "Dealer's card:",;
+        print str(deal[i])
+
+def playerdef(play):
+    for i in range(len(play)):
+        if i == 0:
+           print "Player's card:",;
+        print str(play[i])
 
 decks = []
 
@@ -14,8 +27,6 @@ for i in range (4):
 L= len(decks)
 dealer = []
 player = []
-
-playing = True
 
 
 random1 = random.randint(0, L-1)  #MAKE INTO FUCKING FUNCTION RETARD
@@ -53,6 +64,7 @@ for i in range(2):
 playersum = player[0] + player[1]
 dealersum = dealer[0] + dealer[1]
 
+playing = True
 
 while playing:
     answer = raw_input("Hit or Stand???: ")
@@ -68,29 +80,45 @@ while playing:
         player.append(player3)
         playersum += addition
         print "Dealer's cards:", dealer[0], "X"
-        print "Player's cards:", player
+        playerdef(player)
         if playersum < 21:
             answer = raw_input("HIT or STAND ???: ")
         elif playersum == 21:
             print "BLACKJACK!!!"
-            answer = "Stand"
-
+            answer = "Blackjack"
+        else:
+            print "BUST"
+            answer = "Bust"
     playing = False
 
+
 #=================================================================
+    
 dealing = True
 
-
 while dealing:
-    print dealer
-    if dealersum < 17:
+    while dealersum < 17:
         random6 = random.randint(0, L-1)
         dealer3 = decks[random6]
+        addition = dealer3
         decks.pop(random6)
         L = len(decks)
-        dealersum += dealer3
+        if addition == "Q" or addition == "K" or addition == "J":
+            addition = 10
+        dealer.append(dealer3)
+        dealersum += addition
+        dealerdef(dealer)
+        playerdef(player)
+        time.sleep(1.5)   
     dealing = False
 
-print dealer
+if playersum > dealersum and answer != "Bust":
+    print "WINNER WINNER!"
+elif playersum == dealersum and answer == "Stand":
+    print "PUSH!"
+elif playersum == dealersum and answer == "Blackjack":
+    print "PUSH :("
+else:
+    print "You lose!"
 
 
